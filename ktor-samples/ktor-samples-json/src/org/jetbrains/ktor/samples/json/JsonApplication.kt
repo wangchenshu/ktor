@@ -37,8 +37,9 @@ class JsonApplication(config: ApplicationConfig) : Application(config) {
                 response.interceptSend { value, send ->
                     if (value is Model)
                         send(TextContent(ContentType.Application.Json, GsonBuilder().create().toJson(value)))
-                    else
-                        send(value)
+                    else {
+                        send(GsonBuilder().create().toJson(value))
+                    }
                 }
             }
             next()
